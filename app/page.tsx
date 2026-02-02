@@ -1,65 +1,149 @@
+'use client';
+//TODO: THE ENTIRE UI DESIGN
+import { useState, useEffect } from "react";
 import Image from "next/image";
 
+//  #               #
+//  #     MAIN      #
+//  #               #  
 export default function Home() {
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [showLogin, setShowLogin] = useState(isLoginPhaseActive())
+  const [mainState, setMainState] = useState<"playing" | "surprise">("playing");
+  const [restartKey, setRestartKey] = useState(0);
+
+  useEffect(() => {
+    // (GODOT) when player collides with wall, it will send a post message that will be recieved by this variable
+    const handleMessage = (event: MessageEvent) => {
+      // TODO: After making the website live (1)
+      // if (event.origin !== "https://domain.com") return;
+      
+      // Is where we access postmessage from godot game+iframe
+      const data = event.data;
+
+      //need to recieve the data both as string or obj just in case
+      // TODO: data === 'game_over' switch value to "switch_screen"
+      if (data === "switch_screen" || (typeof data === 'object' && data?.type === "switch_screen")) {
+        setMainState("surprise");
+      }
+      //Awaits ready signal from godot, shows loading screen until the main scene is fullyloaded
+      if (data === "is_loaded" || (typeof data === 'object' && data?.type === "is_loaded")) {
+        setIsLoaded(true);
+      }
+    };
+
+    //Initialize the listener
+    window.addEventListener('message', handleMessage);
+
+    //Recommended memory cleanup
+    return () => {
+      window.removeEventListener('message', handleMessage);
+    };
+  }, []);
+
+//  #                           #
+//  #     HELPER FUNCTIONS      #
+//  #                           #
+
+// Expiration check, fake login screen is visible until Feb 15, 2026 12:00 A.M. GMT+8
+  function isLoginPhaseActive(): boolean {
+    // Feb 15, 2026 00:00:00 GMT+8 = 2026-02-14 16:00:00 UTC
+    const cutoffdate = new Date('2026-02-14T16:00:00Z'); // Z = UTC
+    return new Date() < cutoffdate;
+  }
+//  #                     #
+//  #     COMPONENTS      #
+//  #                     #  
+
+  function LoadingScreen() {
+    return (
+      <div className="absolute inset-0 z-30 bg-black flex flex-col items-center justify-center gap-4">
+        <div className="text-white text-2xl">Entering the hallway...</div>
+        <div className="w-16 h-16 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
+      </div>
+    )
+  }
+  function TempLogin() {
+    const [loginUser, setLoginUser] = useState('');
+    const [loginPass, setLoginPass] = useState('');
+    const [loginError, setLoginError] = useState('');
+
+    //Hard coded login for demo purposes  
+    const handleLogin = () => {
+      const HARD_USER = 'admin';
+      const HARD_PASS = '0214';
+
+      if (loginUser === HARD_USER && loginPass === HARD_PASS) {
+        setLoginError('');
+        setShowLogin(false);
+      } else {
+        setLoginError('Try again');
+      }
+    };
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
+    <div className="opacity-75 absolute inset-0 z-20 flex items-center justify-center    backdrop-blur-md">
+      <div className="w-full max-w-lg mx-6 p-10 backdrop-blur-xl rounded-2xl  text-white flex flex-col items-center gap-6">
+        <input
+          type="text"
+          value={loginUser}
+          onChange={(e) => setLoginUser(e.target.value)}
+          className="px-4 py-2 rounded-xl bg-black/15 border border-white/30 text-white placeholder-white/60 focus:outline-none"
         />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
+        <input
+          type="password"
+          value={loginPass}
+          onChange={(e) => setLoginPass(e.target.value)}
+          onKeyDown={(e) => { if (e.key === 'Enter') handleLogin(); }}
+          className="px-4 py-2 rounded-xl bg-black/15 border border-white/30 text-white placeholder-white/60 focus:outline-none"
+        />
+
+        {loginError && (
+          <div className="text-center text-red-400 text-sm">{loginError}</div>
+        )}
+
+        <button
+          onClick={handleLogin}
+          className="px-4 py-2 rounded-xl bg-black/15 border border-white/30 text-white placeholder-white/60 focus:outline-none"
+        >
+          Enter
+        </button>
+      </div>
+    </div>
+  )
+};
+
+  function Surprise() {
+    return (
+    <div className="w-full h-full bg-gray-900 text-white flex flex-col items-center justify-center gap-8 p-6">
+      <div className="absolute inset-0 z-20 bg-gray-900/90 flex flex-col items-center justify-center gap-8 p-6 text-white">
+        <h1 className="text-5xl md:text-7xl font-bold text-green-500">Surprise!</h1>
+        <p className="text-2xl md:text-3xl text-center">
+          You won!<br />Great job.
+        </p>
+      </div>
+    </div>
+    )
+  }
+
+//  #                    #
+//  #     MAIN BODY      #
+//  #                    #  
+  return (
+    <div className="w-screen h-screen overflow-hidden">
+      {!isLoaded && <LoadingScreen />}
+      {showLogin && <TempLogin />}
+      {/* Always mounts iframe so it only rerenders when needed  */}
+      <iframe 
+        src="/valwebgame/valwebgame.html"
+        className="absolute inset-0 w-full h-full border-0"
+        allow="autoplay; fullscreen; gamepad"
+        allowFullScreen
+      />
+      {mainState === "surprise" && (
+        <Surprise />
+      )}
+      
     </div>
   );
 }

@@ -15,3 +15,7 @@ January 31, 2026 | GMT +8
 ### Ends:
 
 February 13, 2026 | GMT +8
+
+## Changelogs
+January 31, 2026 | GMT +8
+- Initial Commit
