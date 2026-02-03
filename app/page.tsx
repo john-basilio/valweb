@@ -1,5 +1,6 @@
 'use client';
-//TODO: THE ENTIRE UI DESIGN
+//TODO: FINISH THE GAME'S GRAPHICS AND LEVEL DESIGN
+//TODO: FINISH THE SURPRISE SCREEN CONTENT AND UI
 import { useState, useEffect } from "react";
 import Image from "next/image";
 
@@ -21,14 +22,13 @@ export default function Home() {
       // Is where we access postmessage from godot game+iframe
       const data = event.data;
 
-      //need to recieve the data both as string or obj just in case
-      // TODO: data === 'game_over' switch value to "switch_screen"
-      if (data === "switch_screen" || (typeof data === 'object' && data?.type === "switch_screen")) {
-        setMainState("surprise");
-      }
       //Awaits ready signal from godot, shows loading screen until the main scene is fullyloaded
       if (data === "is_loaded" || (typeof data === 'object' && data?.type === "is_loaded")) {
         setIsLoaded(true);
+      }
+      // Handles the switch screen signal from godot
+      if (data === "switch_screen" || (typeof data === 'object' && data?.type === "switch_screen")) {
+        setMainState("surprise");
       }
     };
 
@@ -70,10 +70,10 @@ export default function Home() {
 
     //Hard coded login for demo purposes  
     const handleLogin = () => {
-      const HARD_USER = 'admin';
-      const HARD_PASS = '0214';
+      const USER = "";
+      const PASS = "";
 
-      if (loginUser === HARD_USER && loginPass === HARD_PASS) {
+      if (loginUser === USER && loginPass === PASS) {
         setLoginError('');
         setShowLogin(false);
       } else {
@@ -143,7 +143,6 @@ export default function Home() {
       {mainState === "surprise" && (
         <Surprise />
       )}
-      
     </div>
   );
 }
