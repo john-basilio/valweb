@@ -1,0 +1,121 @@
+[gd_scene format=3 uid="uid://s5wy0fcm7w1y"]
+
+[ext_resource type="Texture2D" uid="uid://cf2afuhk4lmvt" path="res://SBS - Horror Texture Pack 512x512/512x512/Wall/Horror_Wall_14-512x512.png" id="1_u52ul"]
+[ext_resource type="Texture2D" uid="uid://bkl0i4xfa3gyt" path="res://SBS - Horror Texture Pack 512x512/512x512/Floor/Horror_Floor_10-512x512.png" id="2_0b4ue"]
+[ext_resource type="Texture2D" uid="uid://cvktvu0u2rt0i" path="res://SBS - Horror Texture Pack 512x512/512x512/Stone/Horror_Stone_07-512x512.png" id="2_oi3di"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_n6hdu"]
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_1ainy"]
+material = SubResource("StandardMaterial3D_n6hdu")
+size = Vector2(1, 1)
+orientation = 2
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_f2txt"]
+data = PackedVector3Array(0.5, -0.5, 0, -0.5, -0.5, 0, 0.5, 0.5, 0, -0.5, -0.5, 0, -0.5, 0.5, 0, 0.5, 0.5, 0)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_n6hdu"]
+data = PackedVector3Array(0.5, -0.5, 0, -0.5, -0.5, 0, 0.5, 0.5, 0, -0.5, -0.5, 0, -0.5, 0.5, 0, 0.5, 0.5, 0)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1ainy"]
+albedo_texture = ExtResource("2_0b4ue")
+uv1_triplanar = true
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_5xgho"]
+material = SubResource("StandardMaterial3D_1ainy")
+size = Vector2(1, 4)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0b4ue"]
+albedo_texture = ExtResource("2_oi3di")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_f2txt"]
+uv1_triplanar = true
+uv1_triplanar_sharpness = 1.1095695
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_n6hdu"]
+material = SubResource("StandardMaterial3D_f2txt")
+size = Vector2(1, 4)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_km5ld"]
+data = PackedVector3Array(0.5, 0, 2, -0.5, 0, 2, 0.5, 0, -2, -0.5, 0, 2, -0.5, 0, -2, 0.5, 0, -2)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_i2t4f"]
+data = PackedVector3Array(0.5, 0, 2, -0.5, 0, 2, 0.5, 0, -2, -0.5, 0, 2, -0.5, 0, -2, 0.5, 0, -2)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vonw3"]
+albedo_texture = ExtResource("1_u52ul")
+uv1_triplanar = true
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_u52ul"]
+material = SubResource("StandardMaterial3D_vonw3")
+size = Vector2(4, 1)
+orientation = 0
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_8cye3"]
+data = PackedVector3Array(0, -0.5, -2, 0, -0.5, 2, 0, 0.5, -2, 0, -0.5, 2, 0, 0.5, 2, 0, 0.5, -2)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_oi3di"]
+albedo_texture = ExtResource("1_u52ul")
+uv1_triplanar = true
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_vonw3"]
+material = SubResource("StandardMaterial3D_oi3di")
+size = Vector2(4, 1)
+orientation = 0
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_2orkt"]
+data = PackedVector3Array(0, -0.5, -2, 0, -0.5, 2, 0, 0.5, -2, 0, -0.5, 2, 0, 0.5, 2, 0, 0.5, -2)
+
+[node name="Node3D" type="Node3D" unique_id=914551336]
+
+[node name="GridMap" type="GridMap" parent="." unique_id=505088434]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="GridMap" unique_id=621882010]
+
+[node name="1" type="MeshInstance3D" parent="GridMap/StaticBody3D" unique_id=1304441450]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -2)
+mesh = SubResource("PlaneMesh_1ainy")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="GridMap/StaticBody3D" unique_id=812174084]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -1.9162275)
+shape = SubResource("ConcavePolygonShape3D_f2txt")
+
+[node name="end2" type="MeshInstance3D" parent="GridMap/StaticBody3D" unique_id=181526394]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0.5, 2)
+mesh = SubResource("PlaneMesh_1ainy")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="GridMap/StaticBody3D" unique_id=1170775316]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0.5, 2)
+shape = SubResource("ConcavePolygonShape3D_n6hdu")
+
+[node name="floor" type="MeshInstance3D" parent="GridMap/StaticBody3D" unique_id=2091808033]
+mesh = SubResource("PlaneMesh_5xgho")
+
+[node name="ceiling" type="MeshInstance3D" parent="GridMap/StaticBody3D" unique_id=242818411]
+transform = Transform3D(1, 0, 0, 0, -1, 8.742278e-08, 0, -8.742278e-08, -1, 0, 1, 0)
+material_override = SubResource("StandardMaterial3D_0b4ue")
+mesh = SubResource("PlaneMesh_n6hdu")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="GridMap/StaticBody3D" unique_id=954185092]
+shape = SubResource("ConcavePolygonShape3D_km5ld")
+
+[node name="CollisionShape3D4" type="CollisionShape3D" parent="GridMap/StaticBody3D" unique_id=2115918181]
+transform = Transform3D(1, 0, 0, 0, -1, 1.1920929e-07, 0, -1.1920929e-07, -1, 0, 1, 0)
+shape = SubResource("ConcavePolygonShape3D_i2t4f")
+
+[node name="wall1" type="MeshInstance3D" parent="GridMap/StaticBody3D" unique_id=849476516]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.501, 0.5, 0)
+mesh = SubResource("PlaneMesh_u52ul")
+
+[node name="CollisionShape3D5" type="CollisionShape3D" parent="GridMap/StaticBody3D" unique_id=1993130311]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.501, 0.5, 0)
+shape = SubResource("ConcavePolygonShape3D_8cye3")
+
+[node name="wall2" type="MeshInstance3D" parent="GridMap/StaticBody3D" unique_id=1617795847]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0.499, 0.5, 0)
+mesh = SubResource("PlaneMesh_vonw3")
+
+[node name="CollisionShape3D6" type="CollisionShape3D" parent="GridMap/StaticBody3D" unique_id=1459253082]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0.499, 0.5, 0)
+shape = SubResource("ConcavePolygonShape3D_2orkt")

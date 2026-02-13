@@ -34,3 +34,10 @@ February 3, 2026 | GMT +8
     - Improved lighting
     - New Footstep Sounds
     - Pause timer on click, to prevent spam clicking
+
+February 13, 2026 | GMT +8
+  - Finished the surprise page
+  - [Godot]: New additions/changes:
+    - Fixed speed & deceleration amount so it no longer stops exactly right before hitting the end wall
+  - Gary
+  

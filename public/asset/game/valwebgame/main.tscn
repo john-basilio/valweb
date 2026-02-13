@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://bkq48pemkaplx"]
+
+[ext_resource type="Script" uid="uid://c0ljwvyw4mb57" path="res://main.gd" id="1_h2yge"]
+[ext_resource type="PackedScene" uid="uid://s5wy0fcm7w1y" path="res://level.tscn" id="1_ig7tw"]
+[ext_resource type="PackedScene" uid="uid://ble60164f3nej" path="res://player.tscn" id="2_0xm2m"]
+[ext_resource type="AudioStream" uid="uid://dn5iqncesdxce" path="res://sounds/footsteps/footstep1.mp3" id="4_lquwl"]
+[ext_resource type="AudioStream" uid="uid://ks5vy5eq51fh" path="res://sounds/footsteps/footstep2.mp3" id="5_7mycd"]
+
+[node name="main" type="Node3D" unique_id=1301109949]
+script = ExtResource("1_h2yge")
+
+[node name="level" parent="." unique_id=914551336 instance=ExtResource("1_ig7tw")]
+
+[node name="Player" parent="." unique_id=1535676788 instance=ExtResource("2_0xm2m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 1.7190588)
+footstep_sounds = Array[AudioStream]([ExtResource("4_lquwl"), ExtResource("5_7mycd")])
+
+[node name="OmniLight3D" type="OmniLight3D" parent="Player" unique_id=1949903038]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.29609317, -0.7923118)
+light_color = Color(1, 0.855, 0.85, 1)
+light_energy = 0.04
+
+[node name="FootStepPlayer" type="AudioStreamPlayer3D" parent="Player" unique_id=143944550]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.17188326, 0)
+
+[node name="StepTimer" type="Timer" parent="Player" unique_id=1044997803]
